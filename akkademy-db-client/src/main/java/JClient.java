@@ -1,17 +1,20 @@
+import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
-
+import com.example.second.message.GetRequest;
+import com.example.second.message.SetRequest;
 
 import java.util.concurrent.CompletionStage;
-import static akka.pattern.Patterns.ask;
 
+import static akka.pattern.Patterns.ask;
 import static scala.compat.java8.FutureConverters.toJava;
+
 
 public class JClient {
     private final ActorSystem system = ActorSystem.create("LocalSystem");
     private final ActorSelection remoteDb;
 
-    public JClient(String remoteAddress){
+    public JClient(String remoteAddress) {
         remoteDb = system.actorSelection("akka.tcp://akkademy@" + remoteAddress + "/user/akkademy-db");
     }
 
@@ -19,7 +22,7 @@ public class JClient {
         return toJava(ask(remoteDb, new SetRequest(key, value), 2000));
     }
 
-    public CompletionStage<Object> get(String key){
+    public CompletionStage<Object> get(String key) {
         return toJava(ask(remoteDb, new GetRequest(key), 2000));
     }
 }
