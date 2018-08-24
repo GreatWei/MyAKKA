@@ -1,4 +1,3 @@
-import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
 import com.example.second.message.GetRequest;
